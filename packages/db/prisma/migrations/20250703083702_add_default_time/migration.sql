@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Website" ALTER COLUMN "time_added" SET DEFAULT CURRENT_TIMESTAMP;
