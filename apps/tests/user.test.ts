@@ -12,7 +12,7 @@ describe("signup endpoints", () => {
             })
             expect(false, "Control shouldn't reach here");
         } catch(e) {
-            console.log(e);
+            // console.log(e);
         }
     })
 
@@ -35,7 +35,7 @@ describe("signin endpoints", () => {
             })
             expect(false, "Control shouldn't reach here");
         } catch(e) {
-            console.log(e);
+            // console.log(e);
         }
     })
 
