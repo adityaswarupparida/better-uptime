@@ -1,7 +1,6 @@
 import axios from "axios";
-import { password } from "bun";
 
-export const BACKEND_URL = "http://localhost:3001";
+export const BACKEND_URL = "http://localhost:3000";
 
 
 export const createUser = async (): Promise<{

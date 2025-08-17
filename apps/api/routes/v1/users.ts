@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { SignUpSchema } from "../../types";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
 import prisma from "db/store";
 const router = Router();
 
@@ -13,13 +14,24 @@ router.post("/signup", async (req, res) => {
         return;
     } 
     const { username, password } = parsedData.data;
-    console.log(parsedData.data);
+    // console.log(parsedData.data);
 
     try {
+        let hashedPassword: string = "";
+
+        await bcrypt.hash(password, parseInt(process.env.SALT_ROUNDS!), (err, hash) => {
+            if (err) {
+                res.status(500).json({
+                    error: `Internal Server Error: ${err}`
+                });
+                return;
+            }
+            hashedPassword = hash;
+        });
         const user = await prisma.user.create({
             data: {
                 username,
-                password
+                password: hashedPassword
             }
         })
 
@@ -42,12 +54,28 @@ router.post("/signin", async (req, res) => {
             }
         })
 
-        if (!user || user.password !== password) {
+        if (!user) {
             res.status(403).json({
                 message: "Unauthorized"
             })
             return;
         }
+
+        await bcrypt.compare(password, user.password, (err, result) => {
+            if (err) {
+                res.status(500).json({
+                    error: `Error comparing passwords:, ${err}`
+                });
+                return;
+            }
+
+            if (!result) {
+                res.status(400).json({
+                    error: "Bad Request: Incorrect Password"
+                });
+                return;
+            }
+        });
 
         let token = jwt.sign({
             sub: user.id
