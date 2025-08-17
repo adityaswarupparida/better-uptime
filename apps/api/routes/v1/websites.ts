@@ -5,9 +5,9 @@ const router = Router()
 
 router.use(middleware);
 
-router.post('/', async (req, res) => {
+router.post('/website', async (req, res) => {
     if (!req.body.url) {
-        res.status(411).json({});
+        res.status(400).json({});
         return;
     }
 
@@ -37,14 +37,17 @@ router.get('/status/:websiteId', async (req, res) => {
         }
     })
 
-    if (!website?.id) {
+    if (!website) {
         res.status(409).json({
             message: "Website Not Found"
         })
+        return;
     }
 
     res.json({
-        website
+        id: website.id,
+        user_id: website.user_id,
+        url: website.url
     })
 })
 
