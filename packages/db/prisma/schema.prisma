@@ -38,7 +38,7 @@ model region {
 
 model website_tick {
   id               String  @id @default(uuid())
-  response_time_ms DateTime
+  response_time_ms Int
   website_status   website_status
   region_id        String
   website_id       String
