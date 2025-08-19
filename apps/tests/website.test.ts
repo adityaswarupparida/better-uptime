@@ -87,3 +87,44 @@ describe("can fetch website", () => {
     })
 
 })
+
+describe("should be able to fetch websites", () => {
+    let user_id: string, token: string, user_id2: string, token2: string;
+    
+    beforeAll(async () => {
+        const data = await createUser();
+        const data2 = await createUser();
+        user_id = data.user_id;
+        token = data.jwt;
+        user_id2 = data.user_id;
+        token2 = data.jwt;
+    })
+
+    it("is able to fetch websites that the user created", async () => {
+        await axios.post(`${BACKEND_URL}/website`, {
+            url: "https://outrbbsr.com"
+        }, {
+            headers: { "Authorization": token }
+        });
+
+        await axios.post(`${BACKEND_URL}/website`, {
+            url: "https://twitter.com"
+        }, {
+            headers: { "Authorization": token }
+        });
+
+        await axios.post(`${BACKEND_URL}/website`, {
+            url: "https://google.com"
+        }, {
+            headers: { "Authorization": token }
+        });
+
+        const getWebsites = await axios.get(`${BACKEND_URL}/websites`, {
+            headers: { "Authorization": token }
+        })
+
+        console.log(getWebsites.data.length);
+        expect(getWebsites.data.length == 3, "Couldn't fetch all its websites");
+    })
+
+})

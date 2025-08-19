@@ -51,4 +51,16 @@ router.get('/status/:websiteId', async (req, res) => {
     })
 })
 
+router.get("/websites", async (req, res) => {
+    const websites = await prisma.website.findMany({
+        where: {
+            user_id: req.userId
+        }
+    })
+
+    res.json({
+        websites
+    })
+})
+
 export default router;
