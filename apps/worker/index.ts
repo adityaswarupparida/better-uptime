@@ -1,7 +1,8 @@
 import axios from "axios";
 import prisma from "db/store"
-import { BULK_XACK, XREADGROUP } from "redis-pkg/client";
+import { BULK_XACK, client, XREADGROUP } from "redis-pkg/client";
 
+// Create consumer groups for regions
 const REGION_ID = process.env.REGION_ID!;
 const WORKER_ID = process.env.WORKER_ID!;
 
@@ -40,14 +41,24 @@ const fetchWebsites = async (id: string, url: string) => {
 }
 
 const createWebsiteTick = async (responseTime: number, status: "Up" | "Down" | "Unknown", id: string) => {
-    await prisma.website_tick.create({
-        data: {
-            response_time_ms: responseTime,
-            region_id: REGION_ID,
-            website_status: status,
-            website_id: id
+    // await prisma.website_tick.create({
+    //     data: {
+    //         response_time_ms: responseTime,
+    //         region_id: REGION_ID,
+    //         website_status: status,
+    //         website_id: id
+    //     }
+    // })
+    await client.xAdd("betteruptime:website_tick",'*', {
+            'websiteTick': JSON.stringify({
+                website_id: id,
+                website_status: status,
+                response_time_ms: responseTime,
+                region_id: REGION_ID,
+                created_at: new Date().toISOString()
+            })
         }
-    })
+    );
 }
 
 main();

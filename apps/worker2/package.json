@@ -1,0 +1,13 @@
+{
+  "name": "worker2",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest",
+    "redis-pkg": "*",
+    "db": "*"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  }
+}

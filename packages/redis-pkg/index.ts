@@ -1,6 +1,6 @@
 import { createClient } from "redis";
 
-const client = await createClient()
+export const client = await createClient()
     .on("error", (err) => console.log("Redis Client Error", err))
     .connect();
 
@@ -16,8 +16,7 @@ type RedisMessage = {
     messages: {
         id: string;
         message: {
-            id: string;
-            url: string;
+            [x: string]: string
         };
     }[];
 }
@@ -40,31 +39,31 @@ export const BULK_XADD = async (websites : WebsiteEvent[]) => {
     }
 }
 
-export const XREADGROUP = async (consumerGroup: string, workerId: string) => {
+export const XREADGROUP = async (consumerGroup: string, workerId: string, count?: number, streamKey?: string) => {
     const res = await client.xReadGroup(
         consumerGroup,
         workerId, {
-            key: REDIS_STREAM_KEY,
+            key: streamKey || REDIS_STREAM_KEY,
             id: '>'
         }, {
-            COUNT: 5
+            COUNT: count ?? 5
         }
     );
 
-    // console.log(JSON.stringify(res));
     if (!res) return undefined;
+    // console.log(JSON.stringify(res));
 
     const messages = (res as RedisMessage[])[0].messages;
     
     return messages;
 }
 
-const XACK = async (consumerGroup: string, id: string) => {
-    await client.xAck(REDIS_STREAM_KEY, consumerGroup, id);
+const XACK = async (consumerGroup: string, id: string, streamKey?: string) => {
+    await client.xAck(streamKey || REDIS_STREAM_KEY, consumerGroup, id);
 }
 
-export const BULK_XACK = async (consumerGroup: string, websiteIds: string[]) => {
-    for (const id of websiteIds) {
-        await XACK(consumerGroup, id);
+export const BULK_XACK = async (consumerGroup: string, messageIds: string[], streamKey?: string) => {
+    for (const id of messageIds) {
+        await XACK(consumerGroup, id, streamKey);
     }
 }

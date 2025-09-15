@@ -40,7 +40,7 @@ router.post("/signup", async (req, res) => {
         })
     } catch (e) {
         res.status(409).json({
-            message: "Username already exists"
+            message: "Error while signing up "+ e
         })
     }
 });
