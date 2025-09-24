@@ -1,4 +1,8 @@
-import { Github, Twitter, Linkedin, Mail, Globe } from "lucide-react";
+import { Mail, Globe } from "lucide-react";
+import { XIcon } from "./icons/X";
+import { GithubIcon } from "./icons/Github";
+import { MailIcon } from "./icons/Mail";
+import { LinkedInIcon } from "./icons/LinkedIn";
 
 export function Footer() {
   const footerSections = [
@@ -45,10 +49,10 @@ export function Footer() {
   ];
 
   const socialLinks = [
-    { icon: Twitter, href: "#twitter", name: "Twitter" },
-    { icon: Github, href: "#github", name: "GitHub" },
-    { icon: Linkedin, href: "#linkedin", name: "LinkedIn" },
-    { icon: Mail, href: "#email", name: "Email" }
+    { icon: XIcon, href: "#twitter", name: "Twitter" },
+    { icon: GithubIcon, href: "#github", name: "GitHub" },
+    { icon: LinkedInIcon, href: "#linkedin", name: "LinkedIn" },
+    { icon: MailIcon, href: "#email", name: "Email" }
   ];
 
   return (
@@ -81,14 +85,14 @@ export function Footer() {
                   className="w-10 h-10 rounded-lg bg-green-500/10 hover:bg-green-500/20 border border-green-500/20 hover:border-green-500/40 flex items-center justify-center transition-all duration-300 group"
                   aria-label={social.name}
                 >
-                  <social.icon className="w-4 h-4 text-green-400 group-hover:text-green-300" />
+                  <social.icon color={`var(--color-green-400)`}  className={"w-4 h-4 text-green-400 group-hover:text-green-300"}/>
                 </a>
               ))}
             </div>
           </div>
 
           {/* Footer Links */}
-          {footerSections.map((section, index) => (
+          {/* {footerSections.map((section, index) => (
             <div key={index} className="space-y-4">
               <h3 className="font-semibold text-foreground">{section.title}</h3>
               <ul className="space-y-3">
@@ -104,7 +108,7 @@ export function Footer() {
                 ))}
               </ul>
             </div>
-          ))}
+          ))} */}
         </div>
 
         {/* Newsletter Section */}

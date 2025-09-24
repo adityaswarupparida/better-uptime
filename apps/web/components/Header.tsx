@@ -7,9 +7,11 @@ interface HeaderProps {
   onNavigateToDashboard: () => void;
   onNavigateToSignIn: () => void;
   onNavigateToSignUp: () => void;
+  onScrollToFeatures: () => void;
+  onScrollToPricing: () => void;
 }
 
-export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateToSignUp }: HeaderProps) {
+export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateToSignUp, onScrollToFeatures, onScrollToPricing }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -23,7 +25,7 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
         <div className="flex items-center justify-between">
           {/* Logo */}
           <motion.div
-            whileHover={{ scale: 1.05 }}
+            // whileHover={{ scale: 1.05 }}
             className="flex items-center space-x-2 cursor-pointer"
           >
             <motion.div
@@ -43,8 +45,8 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             {[
-              { label: "Features", href: "#features" },
-              { label: "Pricing", href: "#pricing" },
+              { label: "Features", onClick: onScrollToFeatures },
+              { label: "Pricing", onClick: onScrollToPricing },
               { label: "Dashboard", onClick: onNavigateToDashboard },
               { label: "Docs", href: "#docs" },
               { label: "Status", href: "#status" }
@@ -55,8 +57,8 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1 + 0.2 }}
-                whileHover={{ scale: 1.1, color: "#22c55e" }}
-                className="text-muted-foreground hover:text-green-400 transition-all duration-300 relative"
+                // whileHover={{ scale: 1.1, color: "#22c55e" }}
+                className="text-muted-foreground hover:text-green-400 transition-all duration-300 relative cursor-pointer"
               >
                 {item.label}
                 <motion.div
@@ -79,7 +81,7 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
               <Button 
                 variant="ghost" 
                 onClick={onNavigateToSignIn}
-                className="text-muted-foreground hover:text-green-400 transition-all duration-300"
+                className="text-muted-foreground hover:text-green-400 transition-all duration-300 cursor-pointer"
               >
                 Sign In
               </Button>
@@ -87,7 +89,7 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Button 
                 onClick={onNavigateToSignUp}
-                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg shadow-green-500/25 transition-all duration-300"
+                className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 shadow-lg shadow-green-500/25 transition-all duration-300 cursor-pointer"
               >
                 Start Free Trial
               </Button>
@@ -122,8 +124,8 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
           <div className="mt-4 py-4 border-t border-green-500/20">
             <nav className="flex flex-col space-y-4">
               {[
-                { label: "Features", href: "#features" },
-                { label: "Pricing", href: "#pricing" },
+                { label: "Features", onClick: onScrollToFeatures },
+                { label: "Pricing", onClick: onScrollToPricing },
                 { label: "Dashboard", onClick: onNavigateToDashboard },
                 { label: "Docs", href: "#docs" },
                 { label: "Status", href: "#status" }
@@ -148,7 +150,7 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
                   <Button 
                     variant="ghost" 
                     onClick={onNavigateToSignIn}
-                    className="justify-start text-muted-foreground hover:text-green-400 w-full"
+                    className="justify-start text-muted-foreground hover:text-green-400 w-full cursor-pointer"
                   >
                     Sign In
                   </Button>
@@ -160,7 +162,7 @@ export function Header({ onNavigateToDashboard, onNavigateToSignIn, onNavigateTo
                 >
                   <Button 
                     onClick={onNavigateToSignUp}
-                    className="justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 w-full shadow-lg shadow-green-500/25"
+                    className="justify-start bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white border-0 w-full shadow-lg shadow-green-500/25 cursor-pointer"
                   >
                     Start Free Trial
                   </Button>
