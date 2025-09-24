@@ -4,6 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { Pricing } from "@/components/Pricing";
+import { SignIn } from "@/components/SignIn";
 import { SignUp } from "@/components/SignUp";
 import { useState } from "react";
 
@@ -32,17 +33,17 @@ export default function Home() {
 	// 	);
 	// }
 
-	// if (currentView === "signin") {
-	// 	return (
-	// 	<div className="min-h-screen bg-background text-foreground dark">
-	// 		<SignIn 
-	// 		onBackToHome={() => setCurrentView("home")}
-	// 		onNavigateToSignUp={() => setCurrentView("signup")}
-	// 		onNavigateToDashboard={() => setCurrentView("dashboard")}
-	// 		/>
-	// 	</div>
-	// 	);
-	// }
+	if (currentView === "signin") {
+		return (
+		<div className="min-h-screen bg-background text-foreground dark">
+			<SignIn 
+			onBackToHome={() => setCurrentView("home")}
+			onNavigateToSignUp={() => setCurrentView("signup")}
+			onNavigateToDashboard={() => setCurrentView("dashboard")}
+			/>
+		</div>
+		);
+	}
 
 	if (currentView === "signup") {
 		return (
